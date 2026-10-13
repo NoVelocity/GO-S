@@ -26,7 +26,6 @@ public class WebSocketMessageEvent : UnityEvent<WebSocketMessageEventArgs> { }
 
 public class WebsocketClient : MonoBehaviour
 {
-    //По советам с редитта синглтонимся
     public static WebsocketClient Instance { get; private set; }
 
     public WebSocketMessageEvent OnMessageReceived = new WebSocketMessageEvent();
@@ -34,7 +33,7 @@ public class WebsocketClient : MonoBehaviour
     private WebSocket _websocket;
 
     [SerializeField] string _url = "ws://127.0.0.1:8765/unity";
-    [SerializeField] bool _connectOnStart = true; //попытаться подключиться при старте проекта, на случай если по названию не понятно
+    [SerializeField] bool _connectOnStart = true; 
 
     private void Awake()
     {
@@ -45,7 +44,7 @@ public class WebsocketClient : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // на всякий случай если мы тупые и на сцене будет >1 объект с этим скриптом
+            Destroy(gameObject); 
             return;
         }
     }
@@ -58,13 +57,13 @@ public class WebsocketClient : MonoBehaviour
         }
     }
 
-    public async System.Threading.Tasks.Task ConnectToServer() //такие ужасы с асинками нужны, как оказывается для того чтобы не умирала вся сцена при подключении
+    public async System.Threading.Tasks.Task ConnectToServer() 
     {
         _websocket = new WebSocket(_url);
 
         _websocket.OnOpen += () => print($"WebSocket connected to:\n {_url}");
         _websocket.OnError += (errorText) => Debug.LogError($"WebSocket error:\n {errorText}");
-        _websocket.OnClose += (reasonForStopping) => print($"WebSocket connection closed:\n {reasonForStopping}"); //причина остановки
+        _websocket.OnClose += (reasonForStopping) => print($"WebSocket connection closed:\n {reasonForStopping}");
 
         _websocket.OnMessage += (bytes) =>
         {
@@ -115,7 +114,7 @@ public class WebsocketClient : MonoBehaviour
             }
             catch (Exception ex)
             {
-                //Debug.LogError($"Error processing message: {ex.Message}");
+                Debug.LogError($"Error processing message: {ex.Message}");
 
                 if (taskId != null) SendResult(taskId, "ERR_PROCESSING");
             }

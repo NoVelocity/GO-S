@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 183112efed004a3dace9b2964fd7e7a2, type: 3}
-  m_Name: New Robot Parameters
+  m_Name: Robot1
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceGen.RobotParameters
   id: robot1
-  northMarker: 1
-  southMarker: 2
-  eastMarker: 3
-  westMarker: 4
+  home: {x: -2.75, y: 1.55}
+  northMarker: 11
+  southMarker: 12
+  eastMarker: 13
+  westMarker: 14

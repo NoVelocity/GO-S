@@ -10,6 +10,8 @@ namespace SurfaceGen
         public float checkHeight = 1f;
         public Transform wallsRoot;
 
+        public List<Bounds> DoorSeals { get; } = new();
+
         public class Room
         {
             public List<Vector2Int> cells = new();
@@ -33,10 +35,11 @@ namespace SurfaceGen
 
             bool[,] blocked = new bool[w, h];
 
-            var walls = new List<Renderer>();
+            var walls = new List<Bounds>();
             foreach (var r in wallsRoot.GetComponentsInChildren<Renderer>())
                 if (r != floor)
-                    walls.Add(r);
+                    walls.Add(r.bounds);
+            walls.AddRange(DoorSeals);
 
             float pad = cellSize * 0.5f;
 
@@ -46,9 +49,8 @@ namespace SurfaceGen
                 float px = b.min.x + (x + 0.5f) * cellSize;
                 float pz = b.min.z + (z + 0.5f) * cellSize;
 
-                foreach (var r in walls)
+                foreach (var wb in walls)
                 {
-                    Bounds wb = r.bounds;
                     if (px >= wb.min.x - pad && px <= wb.max.x + pad &&
                         pz >= wb.min.z - pad && pz <= wb.max.z + pad)
                     {
@@ -118,7 +120,7 @@ namespace SurfaceGen
             Debug.Log($"Rooms: {rooms.Count}");
         }
 
-        void SnapToWalls(ref float x0, ref float x1, ref float z0, ref float z1, List<Renderer> walls)
+        void SnapToWalls(ref float x0, ref float x1, ref float z0, ref float z1, List<Bounds> walls)
         {
             const float eps = 0.001f;
             float c = cellSize;
@@ -127,9 +129,8 @@ namespace SurfaceGen
             float bestL = float.NegativeInfinity, bestR = float.PositiveInfinity;
             float bestB = float.NegativeInfinity, bestF = float.PositiveInfinity;
 
-            foreach (var r in walls)
+            foreach (var wb in walls)
             {
-                Bounds wb = r.bounds;
                 bool overlapX = wb.max.x > x0 + eps && wb.min.x < x1 - eps;
                 bool overlapZ = wb.max.z > z0 + eps && wb.min.z < z1 - eps;
                 bool alongZ = wb.size.x < wb.size.z;
@@ -171,6 +172,10 @@ namespace SurfaceGen
                 Gizmos.DrawWireCube(r.bounds.center + Vector3.up * 0.05f,
                     new Vector3(r.width, 0.02f, r.depth));
             }
+
+            Gizmos.color = Color.cyan;
+            foreach (var d in DoorSeals)
+                Gizmos.DrawWireCube(d.center, d.size);
         }
 
         public RoomParameters[] GetRoomsAsRoomParameters(float h)

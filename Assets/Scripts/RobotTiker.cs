@@ -13,6 +13,10 @@ public class RobotTiker : MonoBehaviour
     private void Awake()
     {
         robotMover = GetComponent<RobotMover>();
+    }
+    
+    private void Start()
+    {
         robotMover.GoToNahui(hui.position);
     }
 

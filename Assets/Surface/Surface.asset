@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7eb4ec2aacf3424cb7df03e91434b343, type: 3}
-  m_Name: New Surface Parameters
+  m_Name: Surface
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceParameters
-  scale: {x: 10, y: 3, z: 10}
+  scale: {x: 8.4, y: 3, z: 5.94}
   wallParameters:
   - {fileID: 11400000, guid: 376e33129894618e9b31b0bf6354f990, type: 2}
   robotParameters:

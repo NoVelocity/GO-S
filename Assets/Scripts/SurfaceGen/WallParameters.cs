@@ -7,5 +7,6 @@ namespace SurfaceGen
     {
         public Vector2 startPoint;
         public Vector2 endPoint;
+        public DoorParameters[] doors;
     }
 }
