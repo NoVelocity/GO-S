@@ -9,6 +9,7 @@ public class RobotMover : MonoBehaviour
     [Tooltip("Максимальный угол (в градусах), при котором роботу разрешено ехать вперед. Если угол больше — он крутится на месте.")]
     public float allowedAngleToMove = 15f; 
 
+    public string robotId = "no id";
     [Header("Команды для отправки на робота IRL")]
     public float motorLeftSpeed;   // Скорость левого мотора (или общая скорость)
     public float motorRightSpeed;  // Скорость правого мотора (или угловая скорость)
@@ -29,13 +30,13 @@ public class RobotMover : MonoBehaviour
         agent.nextPosition = realRobotPosition; // Привязываем агента
     }
 
-    public void GoToNahui(Vector3 huiPosition)
+    public void SetNavMeshDestination(Vector3 targetDest)
     {
         if (agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
         }
-        agent.SetDestination(huiPosition);
+        agent.SetDestination(targetDest);
     }
 
     void Update()

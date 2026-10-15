@@ -23,6 +23,9 @@ namespace SurfaceGen
         private const float ProbeDistance = 1f;
         private const float ProbeSnapDistance = 1f;
 
+        [SerializeField]
+        GameObject robotPrefab;
+
         private struct Opening
         {
             public string name;
@@ -47,6 +50,24 @@ namespace SurfaceGen
 
             finder.FindRooms();
             localParameters.roomParameters = finder.GetRoomsAsRoomParameters(localParameters.scale.y);
+
+            if (localParameters.robotParameters.Length > 0)
+            {
+                foreach (RobotParameters robot in localParameters.robotParameters)
+                {
+                    Vector3 spawnPos = new Vector3(robot.home.x, 0.5f, robot.home.y);
+                    Quaternion spawnRot = robotPrefab.transform.rotation;
+
+                    var newRobot = Instantiate(robotPrefab, spawnPos, spawnRot);
+
+                    var newRobotMover = newRobot.GetComponent<RobotMover>();
+                    newRobotMover.robotId = robot.id;
+
+                    var newRobotTicker = newRobot.GetComponent<RobotTicker>();
+                    newRobotTicker.realRobotPosition = spawnPos;
+                    newRobotTicker.realRobotRotation = spawnRot;
+                }
+            }
         }
 
         private void Start()
