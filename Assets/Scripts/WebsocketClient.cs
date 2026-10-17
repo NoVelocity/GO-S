@@ -23,7 +23,7 @@ public class WebSocketMessageEventArgs : EventArgs
 
 [Serializable]
 public class WebSocketMessageEvent : UnityEvent<WebSocketMessageEventArgs> { }
-
+[DefaultExecutionOrder(-175)]
 public class WebsocketClient : MonoBehaviour
 {
     public static WebsocketClient Instance { get; private set; }
@@ -114,7 +114,7 @@ public class WebsocketClient : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error processing message: {ex.Message}");
+                Debug.LogError($"Error processing message: {ex}");
 
                 if (taskId != null) SendResult(taskId, "ERR_PROCESSING");
             }

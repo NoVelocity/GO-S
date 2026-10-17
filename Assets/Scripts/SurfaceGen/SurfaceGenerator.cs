@@ -59,6 +59,8 @@ namespace SurfaceGen
                     Quaternion spawnRot = robotPrefab.transform.rotation;
 
                     var newRobot = Instantiate(robotPrefab, spawnPos, spawnRot);
+                    
+                    RobotManager.Instance.robots.Add(newRobot);
 
                     var newRobotMover = newRobot.GetComponent<RobotMover>();
                     newRobotMover.robotId = robot.id;

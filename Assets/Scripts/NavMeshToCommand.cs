@@ -1,9 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 [RequireComponent(typeof(RobotMover))]
 public class NavMeshToCommand : MonoBehaviour
